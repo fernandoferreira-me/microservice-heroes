@@ -4,7 +4,11 @@ const bodyParser = require('body-parser');
 
 const port = process.argv.slice(2)[0];
 const app = express();
-app.use(bodyParser.json());
+
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 const powers = [
   { id: 1, name: 'flying' },
@@ -62,9 +66,8 @@ app.get('/powers', (req, res) => {
 app.post('/hero/**', (req, res) => {
   const heroId = parseInt(req.params[0]);
   const foundHero = heroes.find(subject => subject.id === heroId);
-
   if (foundHero) {
-      for (let attribute in foundHero) {
+    for (let attribute in foundHero) {
           if (req.body[attribute]) {
               foundHero[attribute] = req.body[attribute];
               console.log(`Set ${attribute} to ${req.body[attribute]} in hero: ${heroId}`);
