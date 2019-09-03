@@ -1,0 +1,146 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Super Hero Microservice",
+    "description": "Microservices for saving the world!",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8088",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/x-www-form-urlencoded"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/heroes": {
+      "get": {
+        "tags": [
+          "Heroes"
+        ],
+        "summary": "Get all heroes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Heroes"
+            }
+          }
+        }
+      }
+    },
+    "/powers": {
+      "get": {
+        "tags": [
+          "Powers"
+        ],
+        "summary": "Get all available powers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Powers"
+            }
+          }
+        }
+      }
+    },
+    "/hero/{heroId}": {
+      "parameters": [
+        {
+          "name": "heroId",
+          "in": "path",
+          "required": true,
+          "description": "ID of hero that we want to find",
+          "type": "string"
+        }
+      ],
+      "post": {
+        "summary": "Update hero attribute with give ID",
+        "tags": [
+          "Hero"
+        ],
+        "requestBody": {
+          "description": "Attribute to be updated",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Hero"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Hero is updated",
+            "schema": {
+              "$ref": "#/definitions/Hero"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Hero": {
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "displayName": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "powers": {
+          "type": "array"
+        },
+        "img": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "busy": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Heroes": {
+      "type": "array",
+      "$ref": "#/definitions/Hero"
+    },
+    "Power": {
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "Powers": {
+      "type": "array",
+      "$ref": "#/definitions/Power"
+    }
+  }
+}
